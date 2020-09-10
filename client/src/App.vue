@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style>
-html, body, .el-header{
+html, body, .el-header, .el-main{
   margin:0px;
   padding: 0px;
 }

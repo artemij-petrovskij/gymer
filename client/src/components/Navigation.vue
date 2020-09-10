@@ -12,8 +12,8 @@
       <el-menu-item index="/">
         <a index="/" class="logo">GYMER</a>
       </el-menu-item>
-      <el-menu-item index="/login">Log In</el-menu-item>
-      <el-menu-item index="/signup">Sign Up</el-menu-item>
+      <el-menu-item index="/login">Вход</el-menu-item>
+      <el-menu-item index="/signup">Регистрация</el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -22,6 +22,7 @@
 .el-menu {
   background-color: red;
 }
+
 .logo {
   font-size: 20px;
   text-decoration: none;
