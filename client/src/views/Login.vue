@@ -1,35 +1,35 @@
 <template>
   <div class="login">
- <h1>Авторизация</h1>
-      <el-form  style="max-width: 400px;position: relative;margin:0px auto;padding:20px;"
-        :model="controls"
-        :rules="rules"
-        ref="controls"
-        label-width="90px"
-        label-position="left "
-      >
-        <el-form-item label="Логин" prop="login">
-          <el-input v-model="controls.login"></el-input>
-        </el-form-item>
-        <el-form-item label="Пароль" prop="password">
-          <el-input v-model="controls.password"></el-input>
-        </el-form-item>
+    <h1>Авторизация</h1>
+    <el-form
+      style="max-width: 400px;position: relative;margin:0px auto;padding:20px;"
+      :model="controls"
+      :rules="rules"
+      ref="controls"
+      label-width="90px"
+      label-position="left "
+    >
+      <el-form-item label="Логин" prop="login">
+        <el-input v-model="controls.login"></el-input>
+      </el-form-item>
+      <el-form-item label="Пароль" prop="password">
+        <el-input v-model="controls.password"></el-input>
+      </el-form-item>
 
-        <el-button type="primary" @click="submitForm('controls')">Добавить</el-button>
-      </el-form>
-  
+      <el-button type="primary" @click="submitForm('controls')">Добавить</el-button>
+    </el-form>
   </div>
 </template>
 
 <script>
-//import { Book } from "@/BookService.js";
+import { User } from "@/services/authService.js";
+
 export default {
   data() {
     return {
       controls: {
         login: "",
         password: "",
-        genre: "",
       },
       rules: {
         login: [
@@ -59,26 +59,25 @@ export default {
       },
     };
   },
+
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.addBook();
+          this.addUser();
         } else {
           return false;
         }
       });
     },
-    async addBook() {
-      /*
+
+    async addUser() {
       let data = {
         login: this.controls.login,
         password: this.controls.password,
-        genre: this.controls.genre,
-        img: this.controls.img,
       };
-      await Book.addNewBook(data);
-      */
+      await User.login(data);
+
       this.$message({
         message: "xxx",
         type: "success",
@@ -92,11 +91,10 @@ export default {
 h1 {
   padding-bottom: 10px;
 }
-.login{
+.login {
   padding-top: 100px;
 }
-.el-button{
-  width:100%;
+.el-button {
+  width: 100%;
 }
-
 </style>

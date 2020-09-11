@@ -1,0 +1,76 @@
+const express = require('express')
+const app = express()
+
+const cors = require('cors')
+app.use(cors())
+const session = require('express-session')
+const varMiddleware = require('./middleware/variables')
+const flash = require('connect-flash')
+
+const mongoose = require('mongoose')
+const MongoStore = require('connect-mongodb-session')(session)
+
+const bodyParser = require('body-parser')
+
+const loginRoute = require('./routes/auth/login');
+const signinRoute = require('./routes/auth/signin');
+
+const PORT = process.env.PORT || 3000
+let PASS = process.env.MONGO_DB_PASS
+if (!!!PASS) {
+    const config = require('./mongo_db_pass')
+    PASS = config.password
+}
+
+const MONGODB_URI = `mongodb+srv://user1:${PASS}@cluster0-nmc55.mongodb.net/gymer`
+
+const store = new MongoStore({
+    collection: 'sessions',
+    uri: MONGODB_URI
+
+})
+
+app.use(session({
+    secret: 'SeCrEt',
+    resave: false,
+    saveUninitialized: false,
+    store
+}))
+
+app.use(flash())
+
+app.use(bodyParser.json())
+
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }))
+
+app.use(varMiddleware)
+
+app.use('/account', loginRoute)
+app.use('/account', signinRoute)
+
+
+
+
+async function start() {
+    try {
+
+        await mongoose.connect(MONGODB_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useFindAndModify: false
+        })
+
+        console.log('MongoDB connected')
+
+        app.listen(PORT, function () {
+            console.log(`App listening on port ${PORT}`);
+        });
+    }
+    catch (e) {
+        console.log(e)
+    }
+
+}
+
+start()

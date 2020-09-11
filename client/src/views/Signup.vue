@@ -1,6 +1,6 @@
 <template>
   <div class="login">
- <h1>Авторизация</h1>
+ <h1>Регистрация</h1>
       <el-form  style="max-width: 400px;position: relative;margin:0px auto;padding:20px;"
         :model="controls"
         :rules="rules"
