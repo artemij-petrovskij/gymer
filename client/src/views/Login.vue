@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { User } from "@/services/authService.js";
+import { User } from "@/services/auth.service.js";
 
 export default {
   data() {

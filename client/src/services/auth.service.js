@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 
-const url = 'http://localhost:3000/account'
+const url = 'http://localhost:3000/api'
 
 class User {
     static login = async (body) => {
@@ -12,16 +12,20 @@ class User {
             });
 
             let data = await res.json();
-            return data
+           console.log(data)
         } catch (err) {
 
             console.error(err);
         }
     }
 
-    static signin = async () => {
+    static signup = async (body) => {
         try {
-            const res = await fetch(`${url}/signin`);
+            const res = await fetch(`${url}/signup`, {
+                method: 'post',
+                body: JSON.stringify(body),
+                headers: { 'Content-Type': 'application/json' },
+            });
 
             let data = await res.json();
             return data
