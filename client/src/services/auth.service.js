@@ -11,13 +11,18 @@ class User {
                 headers: { 'Content-Type': 'application/json' },
             });
 
-            let data = await res.json();
-           console.log(data)
+            const data = await res.json();
+
+
+
+            return data
         } catch (err) {
 
             console.error(err);
         }
     }
+
+
 
     static signup = async (body) => {
         try {
@@ -27,13 +32,22 @@ class User {
                 headers: { 'Content-Type': 'application/json' },
             });
 
-            let data = await res.json();
+            let data = await res.json()
+
+            localStorage.jwt = data.token
+            localStorage.user = data.user.login
+
             return data
         } catch (err) {
 
             console.error(err);
         }
     }
+    static logout = async () => {
+        localStorage.removeItem('user');
+    }
+
+
 
 }
 

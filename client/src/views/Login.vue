@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h1>Авторизация</h1>
+    <h1>Вход в Gymer</h1>
     <el-form
       style="max-width: 400px;position: relative;margin:0px auto;padding:20px;"
       :model="controls"
@@ -62,6 +62,7 @@ export default {
 
   methods: {
     submitForm(formName) {
+      
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.addUser();
@@ -76,7 +77,10 @@ export default {
         login: this.controls.login,
         password: this.controls.password,
       };
-      await User.login(data);
+   await User.login(data);
+      
+  
+
 
       this.$message({
         message: "xxx",

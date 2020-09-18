@@ -44,6 +44,12 @@ module.exports.signup = async (req, res) => {
         })
 
         await user.save()
-        res.status(201).json(user)
+
+        jwt.sign({
+            login: req.body.login
+        }, 'secret', (err, token) => {
+            res.json({ token , user})
+
+        })
     }
 }
