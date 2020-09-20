@@ -1,33 +1,28 @@
 <template>
   <div id="app">
-    <el-container>
-      <el-header>
-        <navigation />
-      </el-header>
-      <el-main>
-        <router-view />
-      </el-main>
-    </el-container>
+    <vue-extend-layouts />
   </div>
 </template>
 
 <script>
-import navigation from "./components/Navigation";
+import VueExtendLayouts from "vue-extend-layout";
+
 export default {
   name: "Home",
   components: {
-    navigation,
+    VueExtendLayouts,
   },
 };
 </script>
 
 <style>
-html, body, .el-header, .el-main{
-  margin:0px;
+html,
+body,
+.el-header,
+.el-main {
+  margin: 0px;
   padding: 0px;
 }
-
-
 
 #app {
   font-family: Helvetica, Arial, sans-serif;
@@ -45,5 +40,4 @@ html, body, .el-header, .el-main{
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-
 </style>
