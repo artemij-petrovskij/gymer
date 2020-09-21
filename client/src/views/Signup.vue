@@ -78,6 +78,15 @@ export default {
       };
       await User.signup(data);
 
+      if (localStorage.getItem("jwt") != null) {
+      
+        if (this.$route.params.nextUrl != null) {
+          this.$router.push(this.$route.params.nextUrl);
+        } else {
+          this.$router.push("/");
+        }
+      }
+
       this.$message({
         message: "xxx",
         type: "success",
