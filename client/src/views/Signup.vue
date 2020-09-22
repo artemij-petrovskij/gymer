@@ -16,7 +16,7 @@
         <el-input v-model="controls.password"></el-input>
       </el-form-item>
 
-      <el-button type="primary" @click="submitForm('controls')">Добавить</el-button>
+      <el-button type="primary" @click="submitForm('controls')">Зарегистрироваться</el-button>
     </el-form>
   </div>
 </template>
@@ -76,21 +76,23 @@ export default {
         login: this.controls.login,
         password: this.controls.password,
       };
-      await User.signup(data);
-
-      if (localStorage.getItem("jwt") != null) {
-      
-        if (this.$route.params.nextUrl != null) {
-          this.$router.push(this.$route.params.nextUrl);
-        } else {
-          this.$router.push("/");
+      let response = await User.signup(data);
+      console.log(response.err);
+      if (response.err) {
+        this.$message({
+          message: response.err,
+          type: "warning",
+        });
+      } else {
+        if (localStorage.getItem("jwt") != null) {
+          if (this.$route.params.nextUrl != null) {
+            this.$router.push(this.$route.params.nextUrl);
+          } else {
+            this.$router.push("/dashboard");
+          }
         }
       }
 
-      this.$message({
-        message: "xxx",
-        type: "success",
-      });
     },
   },
 };

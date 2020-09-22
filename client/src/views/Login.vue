@@ -16,7 +16,7 @@
         <el-input v-model="controls.password"></el-input>
       </el-form-item>
 
-      <el-button type="primary" @click="submitForm('controls')">Добавить</el-button>
+      <el-button type="primary" @click="submitForm('controls')">Войти</el-button>
     </el-form>
   </div>
 </template>
@@ -37,7 +37,7 @@ export default {
             min: 1,
             max: 40,
             required: true,
-            message: "Пожалуйста введите логин",
+            message: "Введите логин",
             trigger: "change",
           },
           {
@@ -52,7 +52,7 @@ export default {
             min: 1,
             max: 40,
             required: true,
-            message: "Пожалуйста введите пароль",
+            message: "Введите пароль",
             trigger: "change",
           },
         ],
@@ -62,7 +62,6 @@ export default {
 
   methods: {
     submitForm(formName) {
-      
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.addUser();
@@ -77,10 +76,7 @@ export default {
         login: this.controls.login,
         password: this.controls.password,
       };
-   await User.login(data);
-      
-  
-
+      await User.login(data);
 
       this.$message({
         message: "xxx",

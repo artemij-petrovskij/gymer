@@ -13,26 +13,26 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-    meta: {layout: 'auth'}
+    meta: { layout: 'auth' }
   },
   {
     path: '/about',
     name: 'About',
     component: About,
-    meta: {layout: 'main-layout'}
+    meta: { layout: 'main-layout' }
 
   },
   {
     path: '/login',
     name: 'Log In',
     component: Login,
-    meta: {layout: 'auth'}
+    meta: { layout: 'auth' }
 
   }, {
     path: '/signup',
     name: 'Sign Up',
     component: Signup,
-    meta: {layout: 'auth'}
+    meta: { layout: 'auth' }
 
   },
   {
@@ -59,11 +59,7 @@ router.beforeEach((to, from, next) => {
         params: { nextUrl: to.fullPath }
       })
     } else {
-
-
-
       let user = JSON.parse(localStorage.getItem('user'))
-
       if (to.matched.some(record => record.meta.is_admin)) {
         if (user.is_admin == 1) {
           next()
@@ -72,11 +68,9 @@ router.beforeEach((to, from, next) => {
           next({ name: 'userboard' })
         }
       }
-
       else {
         next()
       }
-
     }
   } else if (to.matched.some(record => record.meta.guest)) {
     if (localStorage.getItem('jwt') == null) {
@@ -89,5 +83,6 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+
 
 export default router

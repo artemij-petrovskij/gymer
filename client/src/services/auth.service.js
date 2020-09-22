@@ -33,9 +33,14 @@ class User {
             });
 
             let data = await res.json()
+           // /:
+            if(res.status === 409){
+                return {err: 'Пользователь с таким логином уже существует'}
+            }else{
+                localStorage.jwt = data.token
+                localStorage.user = data.user.login
+            }
 
-            localStorage.jwt = data.token
-            localStorage.user = data.user.login
 
             return data
         } catch (err) {
