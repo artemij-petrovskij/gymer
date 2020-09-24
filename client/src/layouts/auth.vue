@@ -17,6 +17,7 @@
             </el-menu-item>
             <el-menu-item index="/login">Вход</el-menu-item>
             <el-menu-item index="/signup">Регистрация</el-menu-item>
+             <el-menu-item index="/test/test">test</el-menu-item>
           </el-menu>
         </el-header>
         <el-main>

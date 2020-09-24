@@ -18,8 +18,8 @@ if (!!!PASS) {
     const config = require('./mongo_db_pass')
     PASS = config.password
 }
-
-const MONGODB_URI = `mongodb+srv://user1:${PASS}@cluster0-nmc55.mongodb.net/gymer`
+//const MONGODB_URI = `mongodb+srv://user1:${PASS}@cluster0-nmc55.mongodb.net/gymer`
+const MONGODB_URI = `mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb`
 
 const store = new MongoStore({
     collection: 'sessions',

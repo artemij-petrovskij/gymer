@@ -13,7 +13,7 @@
         <el-input v-model="controls.login"></el-input>
       </el-form-item>
       <el-form-item label="Пароль" prop="password">
-        <el-input v-model="controls.password"></el-input>
+        <el-input type="password" v-model="controls.password"></el-input>
       </el-form-item>
 
       <el-button type="primary" @click="submitForm('controls')">Войти</el-button>
@@ -76,12 +76,23 @@ export default {
         login: this.controls.login,
         password: this.controls.password,
       };
-      await User.login(data);
+      let response = await User.login(data);
+      console.log(response)
+      if (response.err) {
+        this.$message({
+          message: response.err,
+          type: "warning",
+        });
+      } else {
+        if (localStorage.getItem("jwt") != null) {
+          if (this.$route.params.nextUrl != null) {
+            this.$router.push(this.$route.params.nextUrl);
+          } else {
+            this.$router.push("/dashboard");
+          }
+        }
+      }
 
-      this.$message({
-        message: "xxx",
-        type: "success",
-      });
     },
   },
 };

@@ -11,11 +11,16 @@ class User {
                 headers: { 'Content-Type': 'application/json' },
             });
 
-            const data = await res.json();
+            let data = await res.json()
+            console.log(data)
+            if (res.status === 404) {
+                return { err: 'Неправильное имя пользователя или пароль' }
+            } else {
+                localStorage.jwt = data.token
+                localStorage.user = data.user
+                return data
+            }
 
-
-
-            return data
         } catch (err) {
 
             console.error(err);
@@ -33,16 +38,16 @@ class User {
             });
 
             let data = await res.json()
-           // /:
-            if(res.status === 409){
-                return {err: 'Пользователь с таким логином уже существует'}
-            }else{
+
+            if (res.status === 409) {
+                return { err: 'Пользователь с таким логином уже существует' }
+            } else {
                 localStorage.jwt = data.token
                 localStorage.user = data.user.login
+                return data
             }
 
 
-            return data
         } catch (err) {
 
             console.error(err);

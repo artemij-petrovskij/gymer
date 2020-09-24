@@ -10,24 +10,18 @@ module.exports.login = async (req, res) => {
         const isPasswordCorrect = bcrypt.compareSync(req.body.password, candidate.password)
 
         if (isPasswordCorrect) {
-            console.log(req.body)
 
 
-            jwt.sign({
-                login: candidate.login,
-                password: candidate._id
-            }, 'secret', (err, token) => {
-                res.json({ token })
-
-            })
-
-
+            let token = jwt.sign({ login: candidate.login }, 'secret', {
+                expiresIn: 86400 // expires in 24 hours
+            });
+            res.status(200).send({ token: token, user: candidate.login  });
         } else {
-            res.status(404).json({ message: 'Пользователь не найден 1' })
+            res.status(404).json({ err: 'Пользователь не найден (Неправильный пароль)' })
         }
 
     } else {
-        res.status(404).json({ message: 'Пользователь не найден 2' })
+        res.status(404).json({ err: 'Пользователь не найден (не зареган)' })
     }
 }
 
@@ -48,7 +42,7 @@ module.exports.signup = async (req, res) => {
         jwt.sign({
             login: req.body.login
         }, 'secret', (err, token) => {
-            res.json({ token , user})
+            res.json({ token, user })
 
         })
     }

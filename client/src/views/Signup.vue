@@ -2,21 +2,31 @@
   <div class="login">
     <h1>Зарегистрировать аккаунт</h1>
     <el-form
-      style="max-width: 400px;position: relative;margin:0px auto;padding:20px;"
+      style="
+        max-width: 400px;
+        position: relative;
+        margin: 0px auto;
+        padding: 20px;
+      "
       :model="controls"
       :rules="rules"
       ref="controls"
-      label-width="90px"
+      label-width="130px"
       label-position="left "
     >
       <el-form-item label="Логин" prop="login">
         <el-input v-model="controls.login"></el-input>
       </el-form-item>
       <el-form-item label="Пароль" prop="password">
-        <el-input v-model="controls.password"></el-input>
+        <el-input type="password" v-model="controls.password"></el-input>
+      </el-form-item>
+      <el-form-item label="Подтверждение" prop="password">
+        <el-input type="password" v-model="controls.passwordConfirm"></el-input>
       </el-form-item>
 
-      <el-button type="primary" @click="submitForm('controls')">Зарегистрироваться</el-button>
+      <el-button type="primary" @click="submitForm('controls')"
+        >Зарегистрироваться</el-button
+      >
     </el-form>
   </div>
 </template>
@@ -30,6 +40,7 @@ export default {
       controls: {
         login: "",
         password: "",
+        passwordConfirm: "",
       },
       rules: {
         login: [
@@ -37,7 +48,7 @@ export default {
             min: 1,
             max: 40,
             required: true,
-            message: "Пожалуйста введите логин",
+            message: "Введите логин",
             trigger: "change",
           },
           {
@@ -52,7 +63,16 @@ export default {
             min: 1,
             max: 40,
             required: true,
-            message: "Пожалуйста введите пароль",
+            message: "Введите пароль",
+            trigger: "change",
+          },
+        ],
+        passwordConfirm: [
+          {
+            min: 1,
+            max: 40,
+            required: true,
+            message: "Подтвердите пароль",
             trigger: "change",
           },
         ],
@@ -63,9 +83,13 @@ export default {
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid) {
+        if (valid && this.controls.password == this.controls.passwordConfirm) {
           this.addUser();
         } else {
+          this.$message({
+            message: "Пароли не совпадают",
+            type: "warning",
+          });
           return false;
         }
       });
@@ -77,7 +101,6 @@ export default {
         password: this.controls.password,
       };
       let response = await User.signup(data);
-      console.log(response.err);
       if (response.err) {
         this.$message({
           message: response.err,
@@ -92,7 +115,6 @@ export default {
           }
         }
       }
-
     },
   },
 };

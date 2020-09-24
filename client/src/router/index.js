@@ -5,7 +5,7 @@ import About from '../views/About.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import Dashboard from '../views/Dashboard.vue'
-
+import Test from '../views/test/test.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -33,6 +33,12 @@ const routes = [
     name: 'Sign Up',
     component: Signup,
     meta: { layout: 'auth' }
+
+  },
+  {
+    path: '/test/test',
+    name: 'test',
+    component: Test
 
   },
   {
