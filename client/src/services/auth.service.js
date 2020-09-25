@@ -12,12 +12,11 @@ class User {
             });
 
             let data = await res.json()
-            console.log(data)
             if (res.status === 404) {
                 return { err: 'Неправильное имя пользователя или пароль' }
             } else {
-                localStorage.jwt = data.token
-                localStorage.user = data.user
+                localStorage.setItem('jwt', data.token);
+                localStorage.setItem('user', data.user);
                 return data
             }
 
@@ -42,8 +41,8 @@ class User {
             if (res.status === 409) {
                 return { err: 'Пользователь с таким логином уже существует' }
             } else {
-                localStorage.jwt = data.token
-                localStorage.user = data.user.login
+                localStorage.setItem('jwt', data.token);
+                localStorage.setItem('user', data.user.login);
                 return data
             }
 

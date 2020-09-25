@@ -77,7 +77,6 @@ export default {
         password: this.controls.password,
       };
       let response = await User.login(data);
-      console.log(response)
       if (response.err) {
         this.$message({
           message: response.err,
