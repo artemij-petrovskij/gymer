@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import About from '../views/About.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
-import Dashboard from '../views/Dashboard.vue'
-import Test from '../views/test/test.vue'
+import Main from '../views/dashboard/Main.vue'
+import Calendar from '../views/dashboard/Calendar.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -13,42 +13,41 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-    meta: { layout: 'auth' }
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: About,
-    meta: { layout: 'main-layout' }
-
+    meta: { layout: 'auth-template' }
   },
   {
     path: '/login',
     name: 'Log In',
     component: Login,
-    meta: { layout: 'auth' }
+    meta: { layout: 'auth-template' }
 
   }, {
     path: '/signup',
     name: 'Sign Up',
     component: Signup,
-    meta: { layout: 'auth' }
-
-  },
-  {
-    path: '/test/test',
-    name: 'test',
-    component: Test
+    meta: { layout: 'auth-template' }
 
   },
   {
     path: '/dashboard',
     name: 'userboard',
-    component: Dashboard,
+    component: Main,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      layout: 'dashboard-template'
     }
   },
+  {
+    path: '/dashboard/calendar',
+    name: 'calendar',
+    component: Calendar,
+    meta: {
+      layout: 'dashboard-template',
+      requiresAuth: true,
+    }
+
+  },
+
 ]
 
 const router = new VueRouter({
