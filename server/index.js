@@ -9,8 +9,9 @@ const mongoose = require('mongoose')
 const MongoStore = require('connect-mongodb-session')(session)
 const bodyParser = require('body-parser')
 
-const loginRoute = require('./routes/auth/login.route');
-const signinRoute = require('./routes/auth/signup.route');
+const authRoute = require('./routes/auth/auth.route');
+const weightRoute = require('./routes/weight/weight.route');
+
 
 const PORT = process.env.PORT || 3000
 let PASS = process.env.MONGO_DB_PASS
@@ -44,10 +45,8 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(varMiddleware)
 
-app.use('/api', loginRoute)
-app.use('/api', signinRoute)
-
-
+app.use('/api', authRoute)
+app.use('/api/weight', weightRoute)
 
 app.use(express.static(__dirname + '/public/'))
 app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))

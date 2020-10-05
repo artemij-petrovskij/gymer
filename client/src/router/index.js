@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import Main from '../views/dashboard/Main.vue'
 import Calendar from '../views/dashboard/Calendar.vue'
+import Weight from '../views/dashboard/Weight.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,16 @@ const routes = [
     path: '/dashboard/calendar',
     name: 'calendar',
     component: Calendar,
+    meta: {
+      layout: 'dashboard-template',
+      requiresAuth: true,
+    }
+
+  },
+  {
+    path: '/dashboard/weight',
+    name: 'weight',
+    component: Weight,
     meta: {
       layout: 'dashboard-template',
       requiresAuth: true,
