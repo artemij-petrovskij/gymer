@@ -83,13 +83,16 @@ export default {
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid && this.controls.password == this.controls.passwordConfirm) {
-          this.addUser();
+        if (valid) {
+          if (this.controls.password == this.controls.passwordConfirm) {
+            this.addUser();
+          } else {
+            this.$message({
+              message: "Пароли не совпадают",
+              type: "warning",
+            });
+          }
         } else {
-          this.$message({
-            message: "Пароли не совпадают",
-            type: "warning",
-          });
           return false;
         }
       });

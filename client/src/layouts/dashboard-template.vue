@@ -10,24 +10,23 @@
       >
         <el-menu-item index="/dashboard">
           <i class="el-icon-house"></i>
-          <span slot="title">Main</span>
+          <span slot="title">Главная</span>
         </el-menu-item>
 
         <el-menu-item index="/dashboard/weight">
           <i class="el-icon-user-solid"></i>
-          <span slot="title">Weieght</span>
+          <span slot="title">Вес</span>
         </el-menu-item>
 
         <el-menu-item index="/dashboard/calendar">
           <i class="el-icon-date"></i>
-          <span slot="title">Calendar</span>
+          <span slot="title">Календарь</span>
         </el-menu-item>
 
-        <el-menu-item index="/signup">
+        <el-menu-item @click="exit">
           <i class="el-icon-setting"></i>
-          <span slot="title">Navigator Four</span>
+          <span slot="title">Выход</span>
         </el-menu-item>
-
       </el-menu>
     </el-aside>
     <el-container>
@@ -40,6 +39,13 @@
 <script>
 export default {
   name: "dashboard-template",
+  methods: {
+    exit() {
+      localStorage.removeItem("jwt")
+      localStorage.removeItem("user")
+      this.$router.push("/login")
+    },
+  },
 };
 </script>
  
