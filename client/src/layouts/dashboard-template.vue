@@ -18,9 +18,9 @@
           <span slot="title">Вес</span>
         </el-menu-item>
 
-        <el-menu-item index="/dashboard/calendar">
-          <i class="el-icon-date"></i>
-          <span slot="title">Календарь</span>
+        <el-menu-item index="/dashboard/training">
+          <i class="el-icon-edit-outline"></i>
+          <span slot="title">Тренировка</span>
         </el-menu-item>
 
         <el-menu-item @click="exit">
@@ -30,7 +30,7 @@
       </el-menu>
     </el-aside>
     <el-container>
-      <el-header>{{ $route.name }}</el-header>
+      <el-header><h1>{{ $route.name }}</h1></el-header>
       <el-main><router-view /> </el-main>
     </el-container>
   </el-container>

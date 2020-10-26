@@ -7,7 +7,7 @@ const users = new Schema({
         required: true
     },
     weight:
-        [[0]]
+        []
     ,
     password: {
         type: String,

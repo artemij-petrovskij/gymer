@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import Main from '../views/dashboard/Main.vue'
-import Calendar from '../views/dashboard/Calendar.vue'
+import Training from '../views/dashboard/Training.vue'
 import Weight from '../views/dashboard/Weight.vue'
 
 Vue.use(VueRouter)
@@ -39,9 +39,9 @@ const routes = [
     }
   },
   {
-    path: '/dashboard/calendar',
-    name: 'calendar',
-    component: Calendar,
+    path: '/dashboard/training',
+    name: 'training',
+    component: Training,
     meta: {
       layout: 'dashboard-template',
       requiresAuth: true,

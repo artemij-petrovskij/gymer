@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
-const { showWieght, changeWieght } = require('../../controllers/weight.controller')
+const { showWeights, changeWieght } = require('../../controllers/weight.controller')
 
-router.post('/show', showWieght)
+router.post('/show', showWeights)
 router.post('/change', changeWieght)
 
 module.exports = router
