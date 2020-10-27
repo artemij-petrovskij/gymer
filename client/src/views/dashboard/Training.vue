@@ -7,19 +7,22 @@
         margin: 0px auto;
         padding: 20px;
       "
+      :model="controls"
+      :rules="rules"
       ref="controls"
       label-position="left "
     >
       <el-form-item style="text-align: left">
         Подход: {{ controls.set }}
       </el-form-item>
-      <el-form-item label="Упражнение">
+      <el-form-item label="Упражнение" prop="exercise">
         <el-autocomplete
           class="inline-input"
-          v-model="controls.ex"
+          v-model="controls.exercise"
           :fetch-suggestions="querySearch"
           placeholder="Please Input"
           @select="handleSelect"
+          required
         ></el-autocomplete>
       </el-form-item>
 
@@ -42,22 +45,39 @@
         </div>
       </el-form-item>
 
-      <el-button type="primary" @click="submitForm('controls')"
-        >Сохранить</el-button
-      >
+      <el-button-group>
+        <el-button type="primary" @click="nextExercise('controls')"
+          >Следующее Упражнение</el-button
+        >
+        <el-button type="primary" @click="nextSet('controls')"
+          >Следующий подход <i class="el-icon-refresh"></i
+        ></el-button>
+      </el-button-group>
     </el-form>
   </div>
 </template>
 
 <script>
-import { Sportsman } from "@/services/sportsman.service.js";
+//import { Sportsman } from "@/services/sportsman.service.js";
 export default {
   data() {
     return {
       controls: {
-        set: "1",
-        weight: "",
-        repeats: "",
+        set: 1,
+        exercise: "",
+        weight: 0,
+        repeats: 0,
+      },
+      rules: {
+        exercise: [
+          {
+            min: 1,
+            max: 40,
+            required: true,
+            message: "Введите упражнение",
+            trigger: "change",
+          },
+        ],
       },
     };
   },
@@ -90,12 +110,34 @@ export default {
     handleSelect(item) {
       console.log(item);
     },
-    async submitForm() {
+    async nextSet(formName) {
+      /*
       let response = await Sportsman.changeWeight({
         user: localStorage.getItem("user"),
         jwt: localStorage.getItem("jwt"),
       });
-      this.weights = response.reverse();
+      */
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          let data = {
+            user: localStorage.getItem("user"),
+            jwt: localStorage.getItem("jwt"),
+            set: this.controls.set,
+            exercise: this.controls.exercise,
+            weight: this.controls.weight,
+            repeats: this.controls.repeats,
+          };
+          console.log(data);
+          this.controls.set++;
+          this.controls.repeats = 0;
+        }
+      });
+    },
+    async nextExercise() {
+      this.controls.set = 1;
+      this.controls.weight = 0;
+      this.controls.repeats = 0;
+      this.controls.exercise = "";
     },
   },
   mounted() {
@@ -119,7 +161,14 @@ export default {
 .el-form {
   text-align: right !important;
 }
-.el-button {
+.el-button-group {
   width: 100%;
+}
+.el-button {
+  width: 50%;
+}
+.el-form-item__error::after{
+  position: relative!important;
+  right: 0;
 }
 </style>
