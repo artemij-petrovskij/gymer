@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 
-const url = 'http://localhost:3000/api'
+const url = '/api'
 
 class User {
     static login = async (body) => {
