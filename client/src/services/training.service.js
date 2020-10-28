@@ -1,11 +1,11 @@
 const fetch = require('node-fetch')
 
-const url = '/api/weight'
+const url = '/api/training'
 
 class Sportsman {
-    static allWeights = async (body) => {
+    static allTrainings = async (body) => {
         try {
-            const response = await fetch(`${url}/show`,
+            const response = await fetch(`${url}/trainings`,
                 {
                     method: 'post',
                     body: JSON.stringify(body),
@@ -16,14 +16,13 @@ class Sportsman {
             } else {
                 return { err: 'Server error' }
             }
-
         } catch (err) {
             console.error(err);
         }
     }
-    static changeWeight = async (body) => {
+    static addSet = async (body) => {
         try {
-            const response = await fetch(`${url}/change`,
+            const response = await fetch(`${url}/set`,
                 {
                     method: 'post',
                     body: JSON.stringify(body),
@@ -34,7 +33,6 @@ class Sportsman {
             } else {
                 return { err: 'Server error' }
             }
-
         } catch (err) {
             console.error(err);
         }

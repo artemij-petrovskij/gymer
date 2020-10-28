@@ -6,13 +6,15 @@ const users = new Schema({
         unique: true,
         required: true
     },
-    weight:
-        []
-    ,
     password: {
         type: String,
         required: true,
         minLength: 6
-    }
+    },
+    weight:
+        []
+    ,
+    training:
+        []
 })
 module.exports = model('users', users)

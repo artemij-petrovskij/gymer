@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { Sportsman } from "@/services/sportsman.service.js";
+import { Sportsman } from "@/services/weight.service.js";
 
 export default {
   data() {

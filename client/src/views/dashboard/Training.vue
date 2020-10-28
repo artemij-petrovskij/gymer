@@ -1,5 +1,12 @@
 <template>
   <div class="training">
+    <el-table :data="trainings" style="width: 100%">
+      <el-table-column width="80" prop="set" label="Подход"> </el-table-column>
+      <el-table-column prop="exercise" label="Упражнение"> </el-table-column>
+
+      <el-table-column width="80" prop="weight" label="Вес"> </el-table-column>
+      <el-table-column width="85" prop="repeats" label="Повторы"> </el-table-column>
+    </el-table>
     <el-form
       style="
         max-width: 400px;
@@ -21,7 +28,6 @@
           v-model="controls.exercise"
           :fetch-suggestions="querySearch"
           placeholder="Please Input"
-          @select="handleSelect"
           required
         ></el-autocomplete>
       </el-form-item>
@@ -58,10 +64,11 @@
 </template>
 
 <script>
-//import { Sportsman } from "@/services/sportsman.service.js";
+import { Sportsman } from "@/services/training.service.js";
 export default {
   data() {
     return {
+      trainings: [],
       controls: {
         set: 1,
         exercise: "",
@@ -107,32 +114,27 @@ export default {
         { value: "babel" },
       ];
     },
-    handleSelect(item) {
-      console.log(item);
-    },
-    async nextSet(formName) {
-      /*
-      let response = await Sportsman.changeWeight({
-        user: localStorage.getItem("user"),
-        jwt: localStorage.getItem("jwt"),
-      });
-      */
+    nextSet(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          let data = {
-            user: localStorage.getItem("user"),
-            jwt: localStorage.getItem("jwt"),
-            set: this.controls.set,
-            exercise: this.controls.exercise,
-            weight: this.controls.weight,
-            repeats: this.controls.repeats,
-          };
-          console.log(data);
+          this.sendData();
           this.controls.set++;
           this.controls.repeats = 0;
         }
       });
     },
+    async sendData() {
+      let response = await Sportsman.addSet({
+        user: localStorage.getItem("user"),
+        jwt: localStorage.getItem("jwt"),
+        set: this.controls.set,
+        exercise: this.controls.exercise,
+        weight: this.controls.weight,
+        repeats: this.controls.repeats,
+      });
+      this.trainings = response;
+    },
+
     async nextExercise() {
       this.controls.set = 1;
       this.controls.weight = 0;
@@ -144,15 +146,11 @@ export default {
     this.links = this.loadAll();
   },
   async created() {
-    /*
-    let response = await Sportsman.777({
+    let response = await Sportsman.allTrainings({
       user: localStorage.getItem("user"),
       jwt: localStorage.getItem("jwt"),
     });
-    this.weights = response.reverse();
-    console.log(this.weights[0].weight);
-    this.controls.weight = this.weights[0].weight;
-    */
+    this.trainings = response;
   },
 };
 </script>
@@ -167,8 +165,8 @@ export default {
 .el-button {
   width: 50%;
 }
-.el-form-item__error::after{
-  position: relative!important;
+.el-form-item__error::after {
+  position: relative !important;
   right: 0;
 }
 </style>
