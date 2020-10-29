@@ -7,7 +7,7 @@ module.exports.showWeights = async (req, res) => {
 }
 
 module.exports.changeWieght = async (req, res) => {
-    const candidate = await User.findOneAndUpdate({ login: req.body.user })
+    const candidate = await User.findOne({ login: req.body.user })
     await candidate.weight.push({
         date: Date(),
         weight: req.body.weight

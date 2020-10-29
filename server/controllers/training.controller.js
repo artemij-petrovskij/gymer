@@ -8,7 +8,7 @@ module.exports.showExercise = async (req, res) => {
 
 module.exports.addSet = async (req, res) => {
     console.log(req.body)
-    const candidate = await User.findOneAndUpdate({ login: req.body.user })
+    const candidate = await User.findOne({ login: req.body.user })
     
     await candidate.training.push({
         date: Date(),

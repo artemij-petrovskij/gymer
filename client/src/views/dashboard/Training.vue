@@ -35,10 +35,9 @@
         <el-form-item class="weight" label="Вес:">
           <div class="block">
             <span class="demonstration">{{ controls.weight }}</span>
-            <el-slider
-              v-model="controls.weight"
-              :show-tooltip="false"
-            ></el-slider>
+            <div class="block">
+              <el-slider v-model=" controls.weight" show-input> </el-slider>
+            </div>
           </div>
         </el-form-item>
         <el-form-item class="repeats" label="Повторения:">
@@ -47,6 +46,7 @@
             <el-slider
               v-model="controls.repeats"
               :show-tooltip="false"
+              max="40"
             ></el-slider>
           </div>
         </el-form-item>
@@ -183,8 +183,10 @@ export default {
 <style lang="css" scoped>
 .el-form {
   text-align: right !important;
-  background-color: #dbd9de;
+  
   border-radius: 20px;
+  -webkit-box-shadow: 0px 10px 13px -7px #000000, 0px 0px 25px 0px rgba(58,58,58,0.19); 
+box-shadow: 0px 10px 13px -7px #808080, 0px 0px 25px 0px rgba(58,58,58,0.19);
 }
 .el-button-group {
   width: 100%;
@@ -195,6 +197,7 @@ export default {
 
 .form {
   padding: 10px;
+  
 }
 .set,
 .weight,
