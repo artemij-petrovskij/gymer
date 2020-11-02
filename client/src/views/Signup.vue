@@ -18,10 +18,10 @@
         <el-input v-model="controls.login"></el-input>
       </el-form-item>
       <el-form-item label="Пароль" prop="password">
-        <el-input type="password" v-model="controls.password"></el-input>
+        <el-input type="password" v-model="controls.password" show-password></el-input>
       </el-form-item>
       <el-form-item label="Подтверждение" prop="password">
-        <el-input type="password" v-model="controls.passwordConfirm"></el-input>
+        <el-input type="password" v-model="controls.passwordConfirm" show-password></el-input>
       </el-form-item>
 
       <el-button type="primary" @click="submitForm('controls')"

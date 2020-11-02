@@ -46,7 +46,7 @@
             <el-slider
               v-model="controls.repeats"
               :show-tooltip="false"
-              max="40"
+              :max="40"
             ></el-slider>
           </div>
         </el-form-item>
