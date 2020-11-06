@@ -26,9 +26,11 @@
         </el-form-item>
         <el-form-item prop="exercise">
           <el-autocomplete
+            class="inline-input"
             v-model="controls.exercise"
             :fetch-suggestions="querySearch"
             placeholder="Please Input"
+            :trigger-on-focus="false"
           ></el-autocomplete>
         </el-form-item>
 
@@ -36,7 +38,8 @@
           <div class="block">
             <span class="demonstration">{{ controls.weight }}</span>
             <div class="block">
-              <el-slider v-model=" controls.weight" show-input> </el-slider>
+              <el-slider v-model="controls.weight" show-input :max="150">
+              </el-slider>
             </div>
           </div>
         </el-form-item>
@@ -45,6 +48,7 @@
             <span class="demonstration">{{ controls.repeats }}</span>
             <el-slider
               v-model="controls.repeats"
+              show-input
               :show-tooltip="false"
               :max="40"
             ></el-slider>
@@ -119,6 +123,12 @@ export default {
         { value: "Жим штанги лежа узким хватом на горизонтальной скамье" },
         { value: "Жим штанги лежа узким хватом на наклонной скамье" },
 
+         
+        { value: "Разгибания рук на верхнем блоке" },
+
+        { value: " Кроссоверы на верхних блоках" },
+        { value: " Кроссоверы на средних блоках" },
+       
         { value: "Жим штанги сидя (смит)" },
         { value: "Жим штанги стоя" },
         { value: "Жим гантелей стоя" },
@@ -129,6 +139,9 @@ export default {
         { value: "Подъемы гантелей (махи) через стороны вверх" },
         { value: "Подъемы гантелей через стороны вверх в наклоне" },
         { value: "Дэнчик (плечи)" },
+
+        { value: "Тяга штанги на прямых ногах" },
+        { value: "Гильотина" },
 
         { value: "Приседания со штангой на спине" },
         { value: "Выпады с гантелями" },
@@ -183,10 +196,12 @@ export default {
 <style lang="css" scoped>
 .el-form {
   text-align: right !important;
-  
+
   border-radius: 20px;
-  -webkit-box-shadow: 0px 10px 13px -7px #000000, 0px 0px 25px 0px rgba(58,58,58,0.19); 
-box-shadow: 0px 10px 13px -7px #808080, 0px 0px 25px 0px rgba(58,58,58,0.19);
+  -webkit-box-shadow: 0px 10px 13px -7px #000000,
+    0px 0px 25px 0px rgba(58, 58, 58, 0.19);
+  box-shadow: 0px 10px 13px -7px #808080,
+    0px 0px 25px 0px rgba(58, 58, 58, 0.19);
 }
 .el-button-group {
   width: 100%;
@@ -197,7 +212,6 @@ box-shadow: 0px 10px 13px -7px #808080, 0px 0px 25px 0px rgba(58,58,58,0.19);
 
 .form {
   padding: 10px;
-  
 }
 .set,
 .weight,
