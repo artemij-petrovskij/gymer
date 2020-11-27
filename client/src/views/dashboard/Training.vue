@@ -3,9 +3,13 @@
     <el-table :data="trainings" style="width: 100%">
       <el-table-column prop="exercise" label="Упражнение"> </el-table-column>
       <el-table-column prop="set" label="Подход №"> </el-table-column>
-
       <el-table-column prop="weight" label="Вес"> </el-table-column>
       <el-table-column prop="repeats" label="Повторы"> </el-table-column>
+      <el-table-column label="date">
+        <template slot-scope="scope">
+          {{ scope.row.date }}
+        </template>
+      </el-table-column>
     </el-table>
     <div class="form">
       <el-form
@@ -29,8 +33,7 @@
             class="inline-input"
             v-model="controls.exercise"
             :fetch-suggestions="querySearch"
-            placeholder="Please Input"
-            :trigger-on-focus="false"
+            placeholder="Упражнение"
           ></el-autocomplete>
         </el-form-item>
 
@@ -38,7 +41,12 @@
           <div class="block">
             <span class="demonstration">{{ controls.weight }}</span>
             <div class="block">
-              <el-slider v-model="controls.weight" show-input :max="150">
+              <el-slider
+                v-model="controls.weight"
+                show-input
+                inputmode="numeric"
+                :max="150"
+              >
               </el-slider>
             </div>
           </div>
@@ -49,6 +57,7 @@
             <el-slider
               v-model="controls.repeats"
               show-input
+              inputmode="numeric"
               :show-tooltip="false"
               :max="40"
             ></el-slider>
@@ -123,12 +132,11 @@ export default {
         { value: "Жим штанги лежа узким хватом на горизонтальной скамье" },
         { value: "Жим штанги лежа узким хватом на наклонной скамье" },
 
-         
         { value: "Разгибания рук на верхнем блоке" },
 
         { value: " Кроссоверы на верхних блоках" },
         { value: " Кроссоверы на средних блоках" },
-       
+
         { value: "Жим штанги сидя (смит)" },
         { value: "Жим штанги стоя" },
         { value: "Жим гантелей стоя" },
