@@ -197,6 +197,7 @@ export default {
       jwt: localStorage.getItem("jwt"),
     });
     this.trainings = response;
+    console.log(this.trainings)
   },
 };
 </script>
