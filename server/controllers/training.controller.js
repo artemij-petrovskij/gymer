@@ -7,16 +7,18 @@ module.exports.showExercise = async (req, res) => {
             .map(n => n < 10 ? `0${n}` : `${n}`).join('.');
     }
     const candidate = await User
-        .findOne( { login: 777 } )
+        .findOne( { login: req.body.user } )
 
-            console.log(Object.keys(candidate.training))
 
+        let today_training = []
             for (var key in candidate.training) {
-                console.log(key, ':', candidate.training[key]['date']);
-              }
-  
-    //console.log(candidate.training) login: req.body.user "training.date" : ["27.11.2020"] 
-    res.status(201).json(candidate.training);
+               
+                if(candidate.training[key]['date'] === formattedDate()){
+                    today_training.push(candidate.training[key])
+                    console.log(candidate.training[key])
+                }
+            }
+    res.status(201).json(today_training);
 }
 
 module.exports.addSet = async (req, res) => {

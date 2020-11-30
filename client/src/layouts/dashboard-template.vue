@@ -30,7 +30,7 @@
       </el-menu>
     </el-aside>
     <el-container>
-      <el-header><h1>{{ $route.name }}</h1></el-header>
+      <el-header><div class="route-header">{{ $route.meta.header }}</div></el-header>
       <el-main><router-view /> </el-main>
     </el-container>
   </el-container>
@@ -56,6 +56,12 @@ body{
   -moz-user-select: none;     
   -ms-user-select: none;       
   user-select: none;  
+}
+.route-header{
+  padding: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
 }
 </style>
  

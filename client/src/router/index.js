@@ -14,19 +14,20 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-    meta: { layout: 'auth-template' }
+    meta: { layout: 'auth-template',requiresAuth: true},
+    
   },
   {
     path: '/login',
     name: 'Log In',
     component: Login,
-    meta: { layout: 'auth-template' }
+    meta: { layout: 'auth-template',requiresAuth: true}
 
   }, {
     path: '/signup',
     name: 'Sign Up',
     component: Signup,
-    meta: { layout: 'auth-template' }
+    meta: { layout: 'auth-template',requiresAuth: true}
 
   },
   {
@@ -34,8 +35,10 @@ const routes = [
     name: 'userboard',
     component: Main,
     meta: {
+      header:'Главная',
       requiresAuth: true,
       layout: 'dashboard-template'
+     
     }
   },
   {
@@ -43,8 +46,9 @@ const routes = [
     name: 'training',
     component: Training,
     meta: {
+      header:'Тренировка',
       layout: 'dashboard-template',
-      requiresAuth: true,
+      requiresAuth: true
     }
 
   },
@@ -53,6 +57,7 @@ const routes = [
     name: 'weight',
     component: Weight,
     meta: {
+      header:'Контроль веса',
       layout: 'dashboard-template',
       requiresAuth: true,
     }
