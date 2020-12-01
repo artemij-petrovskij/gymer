@@ -12,10 +12,10 @@ module.exports.login = async (req, res) => {
         if (isPasswordCorrect) {
 
 
-            let token = jwt.sign({ login: candidate.login }, 'secret', {
+            let token = jwt.sign({ login: candidate.login }, process.env.ACCESS_TOKEN_SECRET, {
                 expiresIn: 86400 // expires in 24 hours
             });
-            res.status(200).send({ token: token, user: candidate.login  });
+            res.status(200).send({ token: token, user: candidate.login });
         } else {
             res.status(404).json({ err: 'Пользователь не найден (Неправильный пароль)' })
         }
@@ -46,4 +46,7 @@ module.exports.signup = async (req, res) => {
 
         })
     }
+}
+function authenticateToken(req, res, next) {
+
 }

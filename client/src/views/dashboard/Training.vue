@@ -1,6 +1,6 @@
 <template>
   <div class="training">
-    <el-table :data="trainings" style="width: 100%">
+    <el-table v-loading="loading" :data="trainings" style="width: 100%">
       <el-table-column prop="exercise" label="Упражнение"> </el-table-column>
       <el-table-column prop="set" label="Подход №"> </el-table-column>
       <el-table-column prop="weight" label="Вес"> </el-table-column>
@@ -82,6 +82,7 @@ import { Sportsman } from "@/services/training.service.js";
 export default {
   data() {
     return {
+      loading: true,
       trainings: [],
       controls: {
         set: 1,
@@ -100,6 +101,7 @@ export default {
           },
         ],
       },
+      
     };
   },
   methods: {
@@ -190,6 +192,7 @@ export default {
   },
   mounted() {
     this.links = this.loadAll();
+   
   },
   async created() {
     let response = await Sportsman.allTrainings({
@@ -197,6 +200,7 @@ export default {
       jwt: localStorage.getItem("jwt"),
     });
     this.trainings = response;
+     this.loading = false;
   },
 };
 </script>

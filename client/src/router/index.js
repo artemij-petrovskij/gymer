@@ -14,20 +14,20 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-    meta: { layout: 'auth-template',requiresAuth: true},
+    meta: { layout: 'auth-template'},
     
   },
   {
     path: '/login',
     name: 'Log In',
     component: Login,
-    meta: { layout: 'auth-template',requiresAuth: true}
+    meta: { layout: 'auth-template'}
 
   }, {
     path: '/signup',
     name: 'Sign Up',
     component: Signup,
-    meta: { layout: 'auth-template',requiresAuth: true}
+    meta: { layout: 'auth-template'}
 
   },
   {
