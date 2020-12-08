@@ -8,7 +8,9 @@ class User {
             const res = await fetch(`${url}/login`, {
                 method: 'post',
                 body: JSON.stringify(body),
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json',
+                'Auhtorization': 'Bearer'
+            },
             });
 
             let data = await res.json()

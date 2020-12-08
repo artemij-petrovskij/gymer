@@ -9,8 +9,10 @@ const authRoute = require('./routes/auth/auth.route');
 const weightRoute = require('./routes/weight/weight.route');
 const trainingRoute = require('./routes/training/training.route');
 
+require('dotenv').config({path: __dirname + '/.env'})
 const PORT = process.env.PORT || 3000
 let PASS = process.env.MONGO_DB_PASS
+
 if (!!!PASS) {
     const config = require('./mongo_db_pass')
     PASS = config.password

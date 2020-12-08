@@ -1,3 +1,4 @@
+
 const bcrypt = require('bcrypt-nodejs')
 const jwt = require('jsonwebtoken')
 
@@ -47,6 +48,4 @@ module.exports.signup = async (req, res) => {
         })
     }
 }
-function authenticateToken(req, res, next) {
 
-}
