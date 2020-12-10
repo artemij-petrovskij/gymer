@@ -51,7 +51,6 @@ export default {
   },
   async created() {
     let response = await Sportsman.allWeights({
-      user: localStorage.getItem("user"),
       jwt: localStorage.getItem("jwt"),
     });
     this.weights = response.reverse();
@@ -59,8 +58,7 @@ export default {
     if(this.weights[0] !== undefined){
       this.controls.weight = this.weights[0].weight;
     }
-    //this.controls.weight = this.weights[0].weight;
-   //console.log(typeof(this.weights[0]));
+
   },
 
   methods: {

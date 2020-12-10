@@ -1,12 +1,20 @@
 const User = require('../models/auth-model')
+const jwt = require('jsonwebtoken')
 
 module.exports.showWeights = async (req, res) => {
-    console.log(req.body)
-    const candidate = await User.findOne({ login: req.body.user })
+
+
+
+    let decoded = jwt.decode(req.body.jwt, { complete: true });
+
+
+    const candidate = await User.findOne({ login: decoded.payload.login })
     res.status(201).send(candidate.weight);
 }
 
 module.exports.changeWieght = async (req, res) => {
+
+
     const candidate = await User.findOne({ login: req.body.user })
     const date = new Date();
     let day = date.getDay()
@@ -14,7 +22,7 @@ module.exports.changeWieght = async (req, res) => {
     let month = date.getMonth()
 
     await candidate.weight.push({
-        date:new  Date(year, month, day),
+        date: new Date(year, month, day),
         weight: req.body.weight
     })
     await candidate.save()
