@@ -64,7 +64,6 @@ export default {
   methods: {
     async submitForm() {
       let response = await Sportsman.changeWeight({
-        user: localStorage.getItem("user"),
         jwt: localStorage.getItem("jwt"),
         weight: this.controls.weight,
       });

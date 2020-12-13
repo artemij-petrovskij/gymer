@@ -5,7 +5,7 @@
       <el-table-column prop="set" label="Подход №"> </el-table-column>
       <el-table-column prop="weight" label="Вес"> </el-table-column>
       <el-table-column prop="repeats" label="Повторы"> </el-table-column>
-      <el-table-column label="date">
+      <el-table-column label="Дата">
         <template slot-scope="scope">
           {{ scope.row.date }}
         </template>
@@ -34,7 +34,16 @@
             v-model="controls.exercise"
             :fetch-suggestions="querySearch"
             placeholder="Упражнение"
+            @select="handleSelect"
+            clearable
           ></el-autocomplete>
+        </el-form-item>
+        <el-form-item
+          class="set"
+          v-if="exercise_exist"
+          style="text-align: left"
+        >
+          Макс. вес: {{ max.weight }} × {{ max.repeats }} раз(a)
         </el-form-item>
 
         <el-form-item class="weight" label="Вес:">
@@ -83,6 +92,7 @@ export default {
   data() {
     return {
       loading: true,
+      exercise_exist: false,
       trainings: [],
       controls: {
         set: 1,
@@ -101,7 +111,12 @@ export default {
           },
         ],
       },
-      
+      max: {
+        set: 0,
+        exercise: 0,
+        weight: 0,
+        repeats: 0,
+      },
     };
   },
   methods: {
@@ -135,7 +150,8 @@ export default {
         { value: "Жим штанги лежа узким хватом на наклонной скамье" },
 
         { value: "Разгибания рук на верхнем блоке" },
-
+        { value: "Становая тяга" },
+        { value: "Подъем штанги на бицепс" },
         { value: " Кроссоверы на верхних блоках" },
         { value: " Кроссоверы на средних блоках" },
 
@@ -148,6 +164,7 @@ export default {
 
         { value: "Подъемы гантелей (махи) через стороны вверх" },
         { value: "Подъемы гантелей через стороны вверх в наклоне" },
+
         { value: "Дэнчик (плечи)" },
 
         { value: "Тяга штанги на прямых ногах" },
@@ -162,6 +179,9 @@ export default {
         { value: "Гиперэкстензии" },
       ];
     },
+    handleSelect(item) {
+      this.maxSet(item.value);
+    },
     nextSet(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -173,7 +193,6 @@ export default {
     },
     async sendData() {
       let response = await Sportsman.addSet({
-        user: localStorage.getItem("user"),
         jwt: localStorage.getItem("jwt"),
         set: this.controls.set,
         exercise: this.controls.exercise,
@@ -189,18 +208,35 @@ export default {
       this.controls.repeats = 0;
       this.controls.exercise = "";
     },
+
+    async maxSet(set) {
+      let response = await Sportsman.maxSet({
+        jwt: localStorage.getItem("jwt"),
+        exercise: set,
+      });
+
+      this.max.exercise = response.exercise;
+      this.max.weight = response.weight;
+      this.max.set = response.set;
+      this.max.repeats = response.repeats;
+      if (response.weight) {
+        console.log(typeof response);
+        this.exercise_exist = true;
+      } else {
+        this.exercise_exist = false;
+      }
+    },
   },
+
   mounted() {
     this.links = this.loadAll();
-   
   },
   async created() {
     let response = await Sportsman.allTrainings({
-      user: localStorage.getItem("user"),
       jwt: localStorage.getItem("jwt"),
     });
     this.trainings = response;
-     this.loading = false;
+    this.loading = false;
   },
 };
 </script>

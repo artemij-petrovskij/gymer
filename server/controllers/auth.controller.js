@@ -11,8 +11,6 @@ module.exports.login = async (req, res) => {
         const isPasswordCorrect = bcrypt.compareSync(req.body.password, candidate.password)
 
         if (isPasswordCorrect) {
-
-
             let token = jwt.sign({ login: candidate.login }, process.env.ACCESS_TOKEN_SECRET, {
                 expiresIn: 86400 // expires in 24 hours
             });
@@ -43,7 +41,7 @@ module.exports.signup = async (req, res) => {
         jwt.sign({
             login: req.body.login
         }, 'secret', (err, token) => {
-            res.json({ token, user })
+            res.json({ token })
 
         })
     }

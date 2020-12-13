@@ -1,30 +1,24 @@
 const User = require('../models/auth-model')
 const jwt = require('jsonwebtoken')
+const { formattedDate } = require('../functions/date')
 
 module.exports.showWeights = async (req, res) => {
 
-
-
-    let decoded = jwt.decode(req.body.jwt, { complete: true });
-
-
-    const candidate = await User.findOne({ login: decoded.payload.login })
+    let decoded_login = jwt.decode(req.body.jwt, { complete: true });
+    const candidate = await User.findOne({ login: decoded_login.payload.login })
     res.status(201).send(candidate.weight);
 }
 
 module.exports.changeWieght = async (req, res) => {
 
-
-    const candidate = await User.findOne({ login: req.body.user })
-    const date = new Date();
-    let day = date.getDay()
-    let year = date.getFullYear()
-    let month = date.getMonth()
-
+    let decoded_login = jwt.decode(req.body.jwt, { complete: true });
+    const candidate = await User.findOne({ login: decoded_login.payload.login })
+   
     await candidate.weight.push({
-        date: new Date(year, month, day),
+        date: formattedDate(),
         weight: req.body.weight
     })
+    
     await candidate.save()
     res.status(201).send(candidate.weight);
 }

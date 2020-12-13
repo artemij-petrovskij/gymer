@@ -17,7 +17,6 @@ class User {
                 return { err: 'Неправильное имя пользователя или пароль' }
             } else {
                 localStorage.setItem('jwt', data.token);
-                localStorage.setItem('user', data.user);
                 return data
             }
 
@@ -43,7 +42,6 @@ class User {
                 return { err: 'Пользователь с таким логином уже существует' }
             } else {
                 localStorage.setItem('jwt', data.token);
-                localStorage.setItem('user', data.user.login);
                 return data
             }
 
