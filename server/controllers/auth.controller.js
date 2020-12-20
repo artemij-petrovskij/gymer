@@ -11,9 +11,7 @@ module.exports.login = async (req, res) => {
         const isPasswordCorrect = bcrypt.compareSync(req.body.password, candidate.password)
 
         if (isPasswordCorrect) {
-            let token = jwt.sign({ login: candidate.login }, process.env.ACCESS_TOKEN_SECRET, {
-                expiresIn: 86400 // expires in 24 hours
-            });
+            let token = jwt.sign({ login: candidate.login }, process.env.ACCESS_TOKEN_SECRET);
             res.status(200).send({ token: token, user: candidate.login });
         } else {
             res.status(404).json({ err: 'Пользователь не найден (Неправильный пароль)' })
