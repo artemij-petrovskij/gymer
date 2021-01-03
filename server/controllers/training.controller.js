@@ -2,7 +2,7 @@ const User = require('../models/auth-model')
 const jwt = require('jsonwebtoken')
 const { formattedDate } = require('../functions/date')
 
-module.exports.showExercise = async (req, res) => {
+module.exports.showTodayExercises = async (req, res) => {
 
     const decoded_login = jwt.decode(req.body.jwt, { complete: true });
     const candidate = await User.findOne({ login: decoded_login.payload.login })
@@ -18,6 +18,23 @@ module.exports.showExercise = async (req, res) => {
         }
     }
     res.status(201).json(today_training);
+
+}
+
+module.exports.showAllExercises = async (req, res) => {
+
+    const decoded_login = jwt.decode(req.body.jwt, { complete: true });
+    const candidate = await User.findOne({ login: decoded_login.payload.login })
+
+    let today_training = []
+
+    for (var key in candidate.training) {
+
+        today_training.push(candidate.training[key])
+
+    }
+    res.status(201).json(today_training);
+
 }
 
 module.exports.addSet = async (req, res) => {
@@ -69,12 +86,12 @@ module.exports.maxSet = async (req, res) => {
         const best_set = today_training.reduce((acc, curr) => acc.weight > curr.weight ? acc : curr)
         console.log(best_set);
         res.status(201).json(best_set);
-    }else{
+    } else {
         res.status(201).json({})
     }
 
 
 
 
-    
+
 }

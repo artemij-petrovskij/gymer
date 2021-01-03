@@ -1,89 +1,114 @@
 <template>
-  <div class="training">
-    <el-table v-loading="loading" :data="trainings" style="width: 100%">
-      <el-table-column prop="exercise" label="Упражнение"> </el-table-column>
-      <el-table-column prop="set" label="Подход №"> </el-table-column>
-      <el-table-column prop="weight" label="Вес"> </el-table-column>
-      <el-table-column prop="repeats" label="Повторы"> </el-table-column>
+  <el-tabs v-model="activeName" type="border-card">
+    <el-tab-pane label="Тренировка" name="first_tab">
+      <div class="training">
+        <el-table v-loading="loading" :data="trainings" style="width: 100%">
+          <el-table-column prop="exercise" label="Упражнение">
+          </el-table-column>
+          <el-table-column prop="set" label="Подход №"> </el-table-column>
+          <el-table-column prop="weight" label="Вес"> </el-table-column>
+          <el-table-column prop="repeats" label="Повторы"> </el-table-column>
+          <!--
       <el-table-column label="Дата">
         <template slot-scope="scope">
           {{ scope.row.date }}
         </template>
       </el-table-column>
-    </el-table>
-    <div class="form">
-      <el-form
-        style="
-          max-width: 600px;
-          position: relative;
-          margin-left: 20px;
-          margin: 20px auto;
-          padding: 20px;
-        "
-        :model="controls"
-        :rules="rules"
-        ref="controls"
-        label-position="left "
+      -->
+        </el-table>
+        <div class="form">
+          <el-form
+            style="
+              max-width: 600px;
+              position: relative;
+              margin-left: 20px;
+              margin: 20px auto;
+              padding: 20px;
+            "
+            :model="controls"
+            :rules="rules"
+            ref="controls"
+            label-position="left "
+          >
+            <el-form-item class="set" style="text-align: left">
+              Подход: {{ controls.set }}
+            </el-form-item>
+            <el-form-item prop="exercise">
+              <el-autocomplete
+                class="inline-input"
+                v-model="controls.exercise"
+                :fetch-suggestions="querySearch"
+                placeholder="Упражнение"
+                @select="handleSelect"
+                clearable
+              ></el-autocomplete>
+            </el-form-item>
+            <el-form-item
+              class="set"
+              v-if="exercise_exist"
+              style="text-align: left"
+            >
+              Макс. вес: {{ max.weight }} × {{ max.repeats }} раз(a)
+            </el-form-item>
+
+            <el-form-item class="weight" label="Вес:">
+              <div class="block">
+                <span class="demonstration">{{ controls.weight }}</span>
+                <div class="block">
+                  <el-slider
+                    v-model="controls.weight"
+                    show-input
+                    inputmode="numeric"
+                    :max="150"
+                  >
+                  </el-slider>
+                </div>
+              </div>
+            </el-form-item>
+            <el-form-item class="repeats" label="Повторения:">
+              <div class="block">
+                <span class="demonstration">{{ controls.repeats }}</span>
+                <el-slider
+                  v-model="controls.repeats"
+                  show-input
+                  inputmode="numeric"
+                  :show-tooltip="false"
+                  :max="40"
+                ></el-slider>
+              </div>
+            </el-form-item>
+
+            <el-button-group>
+              <el-button type="primary" @click="nextExercise('controls')"
+                >Закончить
+              </el-button>
+              <el-button type="primary" @click="nextSet('controls')"
+                >Подход <i class="el-icon-refresh"></i
+              ></el-button>
+            </el-button-group>
+          </el-form>
+        </div>
+      </div>
+    </el-tab-pane>
+
+    <el-tab-pane label="Архив" name="second-tab">
+      <el-table
+        v-loading="loading"
+        :data="trainings_archive"
+        style="width: 100%"
       >
-        <el-form-item class="set" style="text-align: left">
-          Подход: {{ controls.set }}
-        </el-form-item>
-        <el-form-item prop="exercise">
-          <el-autocomplete
-            class="inline-input"
-            v-model="controls.exercise"
-            :fetch-suggestions="querySearch"
-            placeholder="Упражнение"
-            @change="handleSelect"
-            clearable
-          ></el-autocomplete>
-        </el-form-item>
-        <el-form-item
-          class="set"
-          v-if="exercise_exist"
-          style="text-align: left"
-        >
-          Макс. вес: {{ max.weight }} × {{ max.repeats }} раз(a)
-        </el-form-item>
-
-        <el-form-item class="weight" label="Вес:">
-          <div class="block">
-            <span class="demonstration">{{ controls.weight }}</span>
-            <div class="block">
-              <el-slider
-                v-model="controls.weight"
-                show-input
-                inputmode="numeric"
-                :max="150"
-              >
-              </el-slider>
-            </div>
-          </div>
-        </el-form-item>
-        <el-form-item class="repeats" label="Повторения:">
-          <div class="block">
-            <span class="demonstration">{{ controls.repeats }}</span>
-            <el-slider
-              v-model="controls.repeats"
-              show-input
-              inputmode="numeric"
-              :show-tooltip="false"
-              :max="40"
-            ></el-slider>
-          </div>
-        </el-form-item>
-
-        <el-button-group>
-          <el-button type="primary" @click="nextExercise('controls')"
-            >Закончить
-          </el-button>
-          <el-button type="primary" @click="nextSet('controls')"
-            >Подход <i class="el-icon-refresh"></i
-          ></el-button>
-        </el-button-group>
-      </el-form>
-    </div>
-  </div>
+        <el-table-column prop="exercise" label="Упражнение"> </el-table-column>
+        <el-table-column prop="set" label="Подход №"> </el-table-column>
+        <el-table-column prop="weight" label="Вес"> </el-table-column>
+        <el-table-column prop="repeats" label="Повторы"> </el-table-column>
+        <el-table-column label="Дата">
+          <template slot-scope="scope">
+            {{ scope.row.date }}
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-tab-pane>
+  </el-tabs>
 </template>
 
 <script>
@@ -91,9 +116,11 @@ import { Sportsman } from "@/services/training.service.js";
 export default {
   data() {
     return {
+      activeName: "first_tab",
       loading: true,
       exercise_exist: false,
       trainings: [],
+      trainings_archive: [],
       controls: {
         set: 1,
         exercise: "",
@@ -137,51 +164,56 @@ export default {
     },
     loadAll() {
       return [
-        { value: "Жим штанги лежа на горизонтальной скамье" },
-        { value: "Жим штанги лежа на наклонной скамье" },
+        { value: "Выпады с гантелями" },
+        { value: "Гильотина" },
+        { value: "Отжимания на брусьях" },
+
+        { value: "Гиперэкстензии" },
+        { value: "Дэнчик (плечи)" },
 
         { value: "Жим гантелей лежа на горизонтальной скамье" },
         { value: "Жим гантелей лежа на наклонной скамье" },
 
-        { value: "Разведения гантелей лежа на наклонной скамье" },
-        { value: "Разведения гантелей лежа на горизонтальной скамье" },
+        { value: "Жим гантелей стоя" },
+        { value: "Жим ногами" },
+
+        { value: "Жим штанги лежа на горизонтальной скамье" },
+        { value: "Жим штанги лежа на наклонной скамье" },
 
         { value: "Жим штанги лежа узким хватом на горизонтальной скамье" },
         { value: "Жим штанги лежа узким хватом на наклонной скамье" },
 
-        { value: "Разгибания рук на верхнем блоке" },
-        { value: "Становая тяга" },
-
-        { value: "Подъем штанги на бицепс" },
-        { value: "Подъем штанги на бицепс (Cкотт)" },
-
-        { value: " Кроссоверы на верхних блоках" },
-        { value: " Кроссоверы на средних блоках" },
-
         { value: "Жим штанги сидя" },
         { value: "Жим штанги стоя" },
-        { value: "Жим гантелей стоя" },
+        { value: "Сведение и разведение рук (бабочка)" },
 
-        { value: "Подтягивания" },
+        { value: "Кроссоверы на верхних блоках" },
+        { value: "Кроссоверы на средних блоках" },
         { value: "Подтягивания обратным хватом" },
 
-        { value: "Тяга гантели одной рукой стоя в наклоне" },
-        
+        { value: "Подтягивания" },
+        { value: "Предплечья" },
+        { value: "Подъем штанги на бицепс (Cкотт)" },
+        { value: "Подъем штанги на бицепс обратным хватом" },
+        { value: "Гакк приседания" },
+
+        { value: "Подъем штанги на бицепс" },
+
         { value: "Подъемы гантелей (махи) через стороны вверх" },
         { value: "Подъемы гантелей через стороны вверх в наклоне" },
 
-        { value: "Дэнчик (плечи)" },
-
-        { value: "Тяга штанги на прямых ногах" },
-        { value: "Гильотина" },
-
-        { value: "Приседания со штангой на спине" },
-        { value: "Выпады с гантелями" },
-        { value: "Разгибание ног в тренажере" },
-        { value: "Жим ногами" },
         { value: "Подъемы на носки сидя " },
 
-        { value: "Гиперэкстензии" },
+        { value: "Приседания со штангой на спине" },
+        { value: "Разведения гантелей лежа на горизонтальной скамье" },
+
+        { value: "Разведения гантелей лежа на наклонной скамье" },
+        { value: "Разгибание ног в тренажере" },
+        { value: "Разгибания рук на верхнем блоке" },
+        { value: "Становая тяга" },
+        { value: "Тяга гантели одной рукой стоя в наклоне" },
+
+        { value: "Тяга штанги на прямых ногах" },
       ];
     },
     handleSelect(item) {
@@ -240,8 +272,24 @@ export default {
     let response = await Sportsman.allTrainings({
       jwt: localStorage.getItem("jwt"),
     });
-    this.trainings = response;
-    this.loading = false;
+
+    if (response.err) {
+      this.$router.push("/login");
+    } else {
+      this.trainings = response;
+      this.loading = false;
+    }
+
+    let response_archive = await Sportsman.Archive({
+      jwt: localStorage.getItem("jwt"),
+    });
+
+    if (response_archive.err) {
+      this.$router.push("/login");
+    } else {
+      this.trainings_archive = response_archive.reverse();
+      this.loading = false;
+    }
   },
 };
 </script>

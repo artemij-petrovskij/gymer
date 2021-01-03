@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside style="position:fixed;z-index:1;min-width:65px;">
+    <el-aside style="width: 65px">
       <el-menu
         router
         :default-active="$route.path"
@@ -8,7 +8,6 @@
         :collapse="isCollapse"
         style="height: 100vh"
       >
-        <el-menu-item @click="switcher"> <a href=""></a></el-menu-item>
         <el-menu-item index="/dashboard">
           <i class="el-icon-house"></i>
           <span slot="title">Главная</span>
@@ -24,15 +23,18 @@
           <span slot="title">Тренировка</span>
         </el-menu-item>
 
-        <el-menu-item @click="exit">
+        <el-menu-item index="/dashboard/settings">
           <i class="el-icon-setting"></i>
-          <span slot="title">Выход</span>
+
+          <span slot="title">Настройки</span>
         </el-menu-item>
+
+    
       </el-menu>
     </el-aside>
-    <el-container style="margin-left:65px">
-      <el-header
-        ><div class="route-header">{{ $route.meta.header }}</div></el-header
+    <el-container>
+      <el-header>
+        <div class="route-header">{{ $route.meta.header }}</div></el-header
       >
       <el-main><router-view /> </el-main>
     </el-container>
@@ -48,25 +50,23 @@ export default {
   },
   name: "dashboard-template",
   methods: {
-    switcher() {
-      this.isCollapse = !this.isCollapse;
-    },
-    exit() {
-      localStorage.removeItem("jwt");
-      localStorage.removeItem("user");
-      this.$router.push("/login");
-    },
+   
+
   },
 };
 </script>
 <style lang="css">
-  .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
-    min-height: 400px;
-  }
-  .el-aside{
-    width: 100%;
-  }
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
+}
+.el-aside {
+  width: 100%;
+  text-align: left;
+}
+.el-main {
+  height: 100vh;
+}
 body {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
