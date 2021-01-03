@@ -20,6 +20,9 @@ html,
 body,
 .el-header,
 .el-main {
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   margin: 0px;
   padding: 0px;
 }

@@ -34,7 +34,7 @@
             v-model="controls.exercise"
             :fetch-suggestions="querySearch"
             placeholder="Упражнение"
-            @select="handleSelect"
+            @change="handleSelect"
             clearable
           ></el-autocomplete>
         </el-form-item>
