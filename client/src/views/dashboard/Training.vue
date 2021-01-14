@@ -222,9 +222,12 @@ export default {
     nextSet(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.loading = true;
           this.sendData();
           this.controls.set++;
           this.controls.repeats = 0;
+        
+
         }
       });
     },
@@ -237,6 +240,7 @@ export default {
         repeats: this.controls.repeats,
       });
       this.trainings = response;
+        this.loading = false;
     },
 
     async nextExercise() {
@@ -323,4 +327,6 @@ export default {
 .el-autocomplete {
   width: 100%;
 }
+
+
 </style>

@@ -25,12 +25,13 @@
       >
     </el-form>
     <el-table
+      v-loading="loading"
       :data="weights"
       stripe
       height="450"
       fixed
       style="width: 100%; display: inline-block"
-    > 
+    >
       <el-table-column prop="date" label="Дата"></el-table-column>
       <el-table-column prop="weight" label="Вес"> </el-table-column>
     </el-table>
@@ -47,6 +48,7 @@ export default {
       controls: {
         weight: "",
       },
+      loading: true,
     };
   },
   async created() {
@@ -54,11 +56,11 @@ export default {
       jwt: localStorage.getItem("jwt"),
     });
     this.weights = response.reverse();
-    
-    if(this.weights[0] !== undefined){
-      this.controls.weight = this.weights[0].weight;
-    }
 
+    if (this.weights[0] !== undefined) {
+      this.controls.weight = this.weights[0].weight;
+      this.loading = false;
+    }
   },
 
   methods: {
