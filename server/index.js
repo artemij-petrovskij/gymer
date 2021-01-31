@@ -18,7 +18,6 @@ if (!!!PASS) {
     PASS = config.password
 }
 const MONGODB_URI = `mongodb+srv://user1:${PASS}@cluster0-nmc55.mongodb.net/gymer`
-//const MONGODB_URI = `mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb`
 
 app.use(cors())
 

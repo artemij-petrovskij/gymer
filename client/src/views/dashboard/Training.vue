@@ -3,9 +3,9 @@
     <el-tab-pane label="Тренировка" name="first_tab">
       <div class="training">
         <el-table v-loading="loading" :data="trainings" style="width: 100%">
-          <el-table-column prop="exercise" label="Упражнение">
+          <el-table-column prop="exercise" label="Упр.">
           </el-table-column>
-          <el-table-column prop="set" label="Подход №"> </el-table-column>
+          <el-table-column prop="set" label="Подход"> </el-table-column>
           <el-table-column prop="weight" label="Вес"> </el-table-column>
           <el-table-column prop="repeats" label="Повторы"> </el-table-column>
           <!--
@@ -59,7 +59,8 @@
                     v-model="controls.weight"
                     show-input
                     inputmode="numeric"
-                    :max="150"
+                    :max="300"
+                    type="number"
                   >
                   </el-slider>
                 </div>
@@ -72,8 +73,8 @@
                   v-model="controls.repeats"
                   show-input
                   inputmode="numeric"
-                  :show-tooltip="false"
                   :max="40"
+                  type="number"
                 ></el-slider>
               </div>
             </el-form-item>
@@ -97,8 +98,8 @@
         :data="trainings_archive"
         style="width: 100%"
       >
-        <el-table-column prop="exercise" label="Упражнение"> </el-table-column>
-        <el-table-column prop="set" label="Подход №"> </el-table-column>
+        <el-table-column prop="exercise" label="Упр."> </el-table-column>
+        <el-table-column prop="set" label="Подход"> </el-table-column>
         <el-table-column prop="weight" label="Вес"> </el-table-column>
         <el-table-column prop="repeats" label="Повторы"> </el-table-column>
         <el-table-column label="Дата">
@@ -128,6 +129,7 @@ export default {
         repeats: 0,
       },
       rules: {
+        /*
         exercise: [
           {
             min: 1,
@@ -137,6 +139,7 @@ export default {
             trigger: "change",
           },
         ],
+        */
       },
       max: {
         set: 0,
@@ -214,6 +217,9 @@ export default {
         { value: "Тяга гантели одной рукой стоя в наклоне" },
 
         { value: "Тяга штанги на прямых ногах" },
+
+        { value: "Французкий жим" },
+
       ];
     },
     handleSelect(item) {
@@ -326,6 +332,10 @@ export default {
 }
 .el-autocomplete {
   width: 100%;
+}
+
+.el-table{
+font-size: 12px;
 }
 
 
